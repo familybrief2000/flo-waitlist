@@ -4,50 +4,154 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Flo — Stop hunting the school email</title>
-  <meta name="description" content="Flo reads the school, sports, and work mail you already have and prints one paper for the table." />
+  <meta name="description" content="Flo reads the school, sports, and work mail you already have and prints one paper for the table. You don’t type a thing." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet" />
   <style>
     :root { --paper:#f4ead4; --sheet:#fbf4e4; --ink:#1c1610; --rule:#2a2218; --rust:#8a3d2a; --mute:#5c5348; }
     * { box-sizing: border-box; }
     body { margin:0; background:var(--paper); color:var(--ink); font-family:Newsreader, Georgia, serif; min-height:100vh; }
-    .wrap { max-width: 36rem; margin: 0 auto; padding: 3rem 1.25rem 4rem; }
-    .sheet { background:var(--sheet); border:1px solid rgba(42,34,24,.18); box-shadow: 0 18px 50px rgba(60,40,20,.16); padding: 2.5rem 1.75rem; }
-    @media (min-width: 640px) { .sheet { padding: 3rem 2.5rem; } }
-    .kicker { font-family: Fraunces, Georgia, serif; font-size: .72rem; letter-spacing: .22em; text-transform: uppercase; font-weight: 600; color: var(--rust); text-align:center; }
-    h1 { font-family: Fraunces, Georgia, serif; font-weight: 700; letter-spacing: -.03em; line-height: .8; font-size: clamp(4.5rem, 18vw, 6.5rem); text-align:center; margin: .75rem 0 0; }
-    .hed { font-family: Fraunces, Georgia, serif; font-style: italic; font-size: clamp(1.5rem, 4vw, 1.85rem); text-align:center; line-height: 1.25; margin: 1.25rem 0 0; }
-    .rule { border-top: 3px solid var(--rule); border-bottom: 1px solid var(--rule); height: 7px; margin: 1.5rem 0 0; }
-    .dek { font-size: 1.12rem; line-height: 1.6; margin: 1.5rem 0 0; }
+    .wrap { max-width: 36rem; margin: 0 auto; padding: 2.25rem 1.25rem 3.5rem; }
+    .sheet { background:var(--sheet); border:1px solid rgba(42,34,24,.18); box-shadow: 0 18px 50px rgba(60,40,20,.16); padding: 2rem 1.75rem 1.75rem; min-height: 34rem; display:flex; flex-direction:column; }
+    @media (min-width: 640px) { .sheet { padding: 2.5rem 2.5rem 2rem; min-height: 36rem; } }
+    .top { display:flex; align-items:flex-start; justify-content:space-between; gap: 1rem; }
+    .kicker { font-family: Fraunces, Georgia, serif; font-size: .72rem; letter-spacing: .22em; text-transform: uppercase; font-weight: 600; color: var(--rust); margin:0; }
+    .skip { font-family: Fraunces, Georgia, serif; font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--mute); background:none; border:0; padding:0; cursor:pointer; }
+    .skip:hover { color: var(--rust); }
+    .skip[hidden] { display:none; }
+    h1 { font-family: Fraunces, Georgia, serif; font-weight: 700; letter-spacing: -.03em; line-height: .8; font-size: clamp(3.2rem, 14vw, 5.4rem); text-align:center; margin: .85rem 0 0; }
+    body[data-i="0"] h1 { font-size: clamp(4.5rem, 18vw, 6.5rem); }
+    .rule { border-top: 3px solid var(--rule); border-bottom: 1px solid var(--rule); height: 7px; margin: 1.15rem 0 0; }
+    .slides { position:relative; flex:1; margin-top: 1.35rem; }
+    .slide { display:none; }
+    .slide.on { display:block; }
+    .hed { font-family: Fraunces, Georgia, serif; font-style: italic; font-size: clamp(1.45rem, 4vw, 1.85rem); line-height: 1.25; margin: 0; }
+    .dek { font-size: 1.12rem; line-height: 1.6; margin: 1.1rem 0 0; }
     label { display:block; font-family: Fraunces, Georgia, serif; font-size: .72rem; letter-spacing: .22em; text-transform: uppercase; color: var(--mute); margin-bottom: .4rem; }
     input[type=email] { width:100%; border:1px solid var(--rule); background:var(--sheet); padding: .6rem .75rem; font: 1.1rem Newsreader, Georgia, serif; color: var(--ink); }
-    button { margin-top: .75rem; font-family: Fraunces, Georgia, serif; font-size: .85rem; letter-spacing: .08em; text-transform: uppercase; background: transparent; border: 1px solid var(--rule); padding: .55rem 1rem; cursor: pointer; color: var(--ink); }
-    button:hover { background: var(--ink); color: var(--sheet); }
-    .fine { margin-top: 2rem; font-size: .85rem; color: var(--mute); line-height: 1.45; }
-    form { margin-top: 2rem; }
+    button.ink { font-family: Fraunces, Georgia, serif; font-size: .85rem; letter-spacing: .08em; text-transform: uppercase; background: transparent; border: 1px solid var(--rule); padding: .55rem 1rem; cursor: pointer; color: var(--ink); }
+    button.ink:hover { background: var(--ink); color: var(--sheet); }
+    form { margin-top: 1.5rem; }
+    form button.ink { margin-top: .75rem; }
+    .fine { margin-top: 1.5rem; font-size: .85rem; color: var(--mute); line-height: 1.45; }
+    .nav { display:flex; align-items:center; justify-content:space-between; gap: .75rem; margin-top: 2rem; min-height: 2.5rem; }
+    .dots { display:flex; gap: .45rem; }
+    .dot { width: .55rem; height: .55rem; border: 1px solid var(--rule); background: transparent; padding:0; cursor:pointer; }
+    .dot.on { background: var(--ink); }
+    .actions { display:flex; gap: .5rem; }
+    .back { font-family: Fraunces, Georgia, serif; font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--mute); background:none; border:0; padding: .55rem .4rem; cursor:pointer; }
+    .back:hover { color: var(--ink); }
+    .back[hidden], .next[hidden] { display:none; }
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
   </style>
 </head>
-<body>
+<body data-i="0">
   <main class="wrap">
     <article class="sheet">
-      <p class="kicker">The family newspaper</p>
+      <div class="top">
+        <p class="kicker">The family newspaper</p>
+        <button class="skip" type="button" id="skip">Skip</button>
+      </div>
       <h1>FLO</h1>
-      <p class="hed">Stop hunting the school email.</p>
       <div class="rule"></div>
-      <p class="dek">Buried in school email. Picture day. Soccer’s at the wrong field. Two pickups at once. Flo reads the mail you already have and prints one paper for the table — so you get the morning back with the kids, not the inbox. Named after my mom. She doesn’t invent.</p>
-      <form action="https://formsubmit.co/familybrief2000@gmail.com" method="POST">
-        <input type="hidden" name="_subject" value="Flo waitlist" />
-        <input type="hidden" name="_captcha" value="false" />
-        <input type="hidden" name="_template" value="box" />
-        <input type="hidden" name="_next" value="https://familybrief2000.github.io/flo-waitlist/thanks.html" />
-        <input type="text" name="_honey" style="display:none" />
-        <label for="email">Your email</label>
-        <input id="email" type="email" name="email" required autocomplete="email" placeholder="you@example.com" />
-        <button type="submit">Put me on the list</button>
-      </form>
-      <p class="fine">First families, by hand. We’ll write when a real household is using the paper — not when we have a prettier page. Your data is safe with us. Not shared with anyone else.</p>
+      <div class="slides" id="slides">
+        <section class="slide on" data-i="0">
+          <p class="hed">Stop hunting the school email.</p>
+          <p class="dek">Picture day. Wrong field. Two pickups. Already in your inbox. Already missed.</p>
+        </section>
+        <section class="slide" data-i="1">
+          <p class="hed">They wait for you to type.</p>
+          <p class="dek">School already sent it. Then you become the secretary: copy picture day into the family calendar, the field change into a note, both pickups by hand. Miss one forward and the board is wrong. So you still hunt the email.</p>
+        </section>
+        <section class="slide" data-i="2">
+          <p class="hed">You don’t type a thing.</p>
+          <p class="dek">Connect Gmail once. School, sports, and work mail come in on their own. One paper for the table. She doesn’t invent.</p>
+        </section>
+        <section class="slide" data-i="3">
+          <p class="dek">First families, by hand. We’ll write when a real household is using the paper.</p>
+          <form action="https://formsubmit.co/familybrief2000@gmail.com" method="POST">
+            <input type="hidden" name="_subject" value="Flo waitlist" />
+            <input type="hidden" name="_captcha" value="false" />
+            <input type="hidden" name="_template" value="box" />
+            <input type="hidden" name="_next" value="https://familybrief2000.github.io/flo-waitlist/thanks.html" />
+            <input type="text" name="_honey" style="display:none" />
+            <label for="email">Your email</label>
+            <input id="email" type="email" name="email" required autocomplete="email" placeholder="you@example.com" />
+            <button class="ink" type="submit">Put me on the list</button>
+          </form>
+          <p class="fine">Your data is safe with us. Not shared with anyone else.</p>
+        </section>
+      </div>
+      <div class="nav">
+        <div class="dots" id="dots" role="tablist" aria-label="Slides"></div>
+        <div class="actions">
+          <button class="back" type="button" id="back" hidden>Back</button>
+          <button class="ink next" type="button" id="next">Next</button>
+        </div>
+      </div>
     </article>
   </main>
+  <noscript>
+    <style>
+      .slide { display:block !important; margin-bottom: 2rem; }
+      .nav, .skip { display:none !important; }
+      h1 { font-size: clamp(4.5rem, 18vw, 6.5rem) !important; }
+    </style>
+  </noscript>
+  <script>
+    (function () {
+      var slides = [].slice.call(document.querySelectorAll(".slide"));
+      var n = slides.length;
+      var i = 0;
+      var dots = document.getElementById("dots");
+      var next = document.getElementById("next");
+      var back = document.getElementById("back");
+      var skip = document.getElementById("skip");
+      var startX = 0;
+
+      slides.forEach(function (_, k) {
+        var b = document.createElement("button");
+        b.className = "dot" + (k === 0 ? " on" : "");
+        b.type = "button";
+        b.setAttribute("aria-label", "Slide " + (k + 1));
+        b.addEventListener("click", function () { go(k); });
+        dots.appendChild(b);
+      });
+
+      function go(to) {
+        i = Math.max(0, Math.min(n - 1, to));
+        document.body.setAttribute("data-i", String(i));
+        slides.forEach(function (s, k) { s.classList.toggle("on", k === i); });
+        [].forEach.call(dots.children, function (d, k) { d.classList.toggle("on", k === i); });
+        back.hidden = i === 0;
+        next.hidden = i === n - 1;
+        skip.hidden = i === n - 1;
+        if (i === n - 1) {
+          var el = document.getElementById("email");
+          if (el) el.focus();
+        }
+      }
+
+      next.addEventListener("click", function () { go(i + 1); });
+      back.addEventListener("click", function () { go(i - 1); });
+      skip.addEventListener("click", function () { go(n - 1); });
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "ArrowRight" || (e.key === "Enter" && i < n - 1 && e.target === document.body)) go(i + 1);
+        if (e.key === "ArrowLeft") go(i - 1);
+      });
+
+      document.addEventListener("touchstart", function (e) {
+        if (e.changedTouches[0]) startX = e.changedTouches[0].clientX;
+      }, { passive: true });
+      document.addEventListener("touchend", function (e) {
+        if (!e.changedTouches[0]) return;
+        var dx = e.changedTouches[0].clientX - startX;
+        if (dx < -50) go(i + 1);
+        if (dx > 50) go(i - 1);
+      }, { passive: true });
+    })();
+  </script>
 </body>
 </html>

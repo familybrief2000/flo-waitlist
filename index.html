@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Flo — Stop hunting the school email</title>
-  <meta name="description" content="Flo reads the school, sports, and work mail you already have and prints one paper for the table. You don’t type a thing." />
+  <meta name="description" content="Flo reads the school email you already got and makes one paper. You don’t type." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet" />
@@ -12,36 +12,36 @@
     :root { --paper:#f4ead4; --sheet:#fbf4e4; --ink:#1c1610; --rule:#2a2218; --rust:#8a3d2a; --mute:#5c5348; }
     * { box-sizing: border-box; }
     body { margin:0; background:var(--paper); color:var(--ink); font-family:Newsreader, Georgia, serif; min-height:100vh; }
-    .wrap { max-width: 36rem; margin: 0 auto; padding: 2.25rem 1.25rem 3.5rem; }
-    .sheet { background:var(--sheet); border:1px solid rgba(42,34,24,.18); box-shadow: 0 18px 50px rgba(60,40,20,.16); padding: 2rem 1.75rem 1.75rem; min-height: 34rem; display:flex; flex-direction:column; }
-    @media (min-width: 640px) { .sheet { padding: 2.5rem 2.5rem 2rem; min-height: 36rem; } }
-    .top { display:flex; align-items:flex-start; justify-content:space-between; gap: 1rem; }
-    .kicker { font-family: Fraunces, Georgia, serif; font-size: .72rem; letter-spacing: .22em; text-transform: uppercase; font-weight: 600; color: var(--rust); margin:0; }
-    .skip { font-family: Fraunces, Georgia, serif; font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--mute); background:none; border:0; padding:0; cursor:pointer; }
+    .wrap { max-width: 28rem; margin: 0 auto; padding: 1.25rem 1rem 2.5rem; }
+    .sheet { background:var(--sheet); border:1px solid rgba(42,34,24,.18); box-shadow: 0 18px 50px rgba(60,40,20,.16); padding: 1.15rem 1.15rem 1.25rem; display:flex; flex-direction:column; min-height: min(40rem, 92vh); }
+    .top { display:flex; align-items:baseline; justify-content:space-between; gap: 1rem; }
+    .kicker { font-family: Fraunces, Georgia, serif; font-size: .68rem; letter-spacing: .2em; text-transform: uppercase; font-weight: 600; color: var(--rust); margin:0; }
+    .skip { font-family: Fraunces, Georgia, serif; font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--mute); background:none; border:0; padding:0; cursor:pointer; }
     .skip:hover { color: var(--rust); }
     .skip[hidden] { display:none; }
-    h1 { font-family: Fraunces, Georgia, serif; font-weight: 700; letter-spacing: -.03em; line-height: .8; font-size: clamp(3.2rem, 14vw, 5.4rem); text-align:center; margin: .85rem 0 0; }
-    body[data-i="0"] h1 { font-size: clamp(4.5rem, 18vw, 6.5rem); }
-    .rule { border-top: 3px solid var(--rule); border-bottom: 1px solid var(--rule); height: 7px; margin: 1.15rem 0 0; }
-    .slides { position:relative; flex:1; margin-top: 1.35rem; }
+    h1 { font-family: Fraunces, Georgia, serif; font-weight: 700; letter-spacing: -.03em; line-height: .8; font-size: 2.4rem; text-align:center; margin: .55rem 0 0; }
+    .rule { border-top: 3px solid var(--rule); border-bottom: 1px solid var(--rule); height: 7px; margin: .7rem 0 .9rem; }
+    .slides { flex:1; }
     .slide { display:none; }
     .slide.on { display:block; }
-    .hed { font-family: Fraunces, Georgia, serif; font-style: italic; font-size: clamp(1.45rem, 4vw, 1.85rem); line-height: 1.25; margin: 0; }
-    .dek { font-size: 1.12rem; line-height: 1.6; margin: 1.1rem 0 0; }
+    .pic { width:100%; display:block; border:1px solid var(--rule); background:#efe4cc; aspect-ratio: 4 / 3; object-fit: cover; }
+    .hed { font-family: Fraunces, Georgia, serif; font-style: italic; font-size: 1.55rem; line-height: 1.2; margin: .9rem 0 0; }
+    .dek { font-size: 1.12rem; line-height: 1.45; margin: .55rem 0 0; }
+    .bits { list-style:none; padding:0; margin: .85rem 0 0; display:flex; flex-wrap:wrap; gap: .4rem; }
+    .bits li { font-family: Fraunces, Georgia, serif; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; border:1px solid var(--rule); padding: .35rem .55rem; }
     label { display:block; font-family: Fraunces, Georgia, serif; font-size: .72rem; letter-spacing: .22em; text-transform: uppercase; color: var(--mute); margin-bottom: .4rem; }
     input[type=email] { width:100%; border:1px solid var(--rule); background:var(--sheet); padding: .6rem .75rem; font: 1.1rem Newsreader, Georgia, serif; color: var(--ink); }
     button.ink { font-family: Fraunces, Georgia, serif; font-size: .85rem; letter-spacing: .08em; text-transform: uppercase; background: transparent; border: 1px solid var(--rule); padding: .55rem 1rem; cursor: pointer; color: var(--ink); }
     button.ink:hover { background: var(--ink); color: var(--sheet); }
-    form { margin-top: 1.5rem; }
+    form { margin-top: 1.1rem; }
     form button.ink { margin-top: .75rem; }
-    .fine { margin-top: 1.5rem; font-size: .85rem; color: var(--mute); line-height: 1.45; }
-    .nav { display:flex; align-items:center; justify-content:space-between; gap: .75rem; margin-top: 2rem; min-height: 2.5rem; }
+    .fine { margin-top: 1.1rem; font-size: .85rem; color: var(--mute); line-height: 1.4; }
+    .nav { display:flex; align-items:center; justify-content:space-between; gap: .75rem; margin-top: 1.15rem; }
     .dots { display:flex; gap: .45rem; }
     .dot { width: .55rem; height: .55rem; border: 1px solid var(--rule); background: transparent; padding:0; cursor:pointer; }
     .dot.on { background: var(--ink); }
     .actions { display:flex; gap: .5rem; }
     .back { font-family: Fraunces, Georgia, serif; font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--mute); background:none; border:0; padding: .55rem .4rem; cursor:pointer; }
-    .back:hover { color: var(--ink); }
     .back[hidden], .next[hidden] { display:none; }
     @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
   </style>
@@ -57,19 +57,29 @@
       <div class="rule"></div>
       <div class="slides" id="slides">
         <section class="slide on" data-i="0">
-          <p class="hed">Stop hunting the school email.</p>
-          <p class="dek">Picture day. Wrong field. Two pickups. Already in your inbox. Already missed.</p>
+          <img class="pic" src="pile.png" alt="A breakfast table buried in school, soccer, and pickup mail." width="1024" height="768" />
+          <p class="hed">You miss picture day.</p>
+          <p class="dek">It’s in the email. Soccer too. Pickup too. Too many emails.</p>
         </section>
         <section class="slide" data-i="1">
-          <p class="hed">They wait for you to type.</p>
-          <p class="dek">School already sent it. Then you become the secretary: copy picture day into the family calendar, the field change into a note, both pickups by hand. Miss one forward and the board is wrong. So you still hunt the email.</p>
+          <img class="pic" src="type.png" alt="A hand copying a school email from a phone onto an empty family calendar." width="1024" height="768" />
+          <p class="hed">Other apps make you type.</p>
+          <p class="dek">You copy the email onto a calendar. If you forget one, the app is wrong.</p>
         </section>
         <section class="slide" data-i="2">
-          <p class="hed">You don’t type a thing.</p>
-          <p class="dek">Connect Gmail once. School, sports, and work mail come in on their own. One paper for the table. She doesn’t invent.</p>
+          <img class="pic" src="paper.png" alt="A Flo newspaper on a clear breakfast table." width="1024" height="768" />
+          <p class="hed">Flo makes one paper.</p>
+          <p class="dek">It reads the mail you already got. You don’t type. She doesn’t make stuff up.</p>
+          <ul class="bits">
+            <li>Picture day</li>
+            <li>Soccer field</li>
+            <li>Two pickups</li>
+          </ul>
         </section>
         <section class="slide" data-i="3">
-          <p class="dek">First families, by hand. We’ll write when a real household is using the paper.</p>
+          <img class="pic" src="paper.png" alt="A Flo newspaper on a clear breakfast table." width="1024" height="768" />
+          <p class="hed">Want the paper?</p>
+          <p class="dek">First families, by hand. We’ll write when a real house is using it.</p>
           <form action="https://formsubmit.co/familybrief2000@gmail.com" method="POST">
             <input type="hidden" name="_subject" value="Flo waitlist" />
             <input type="hidden" name="_captcha" value="false" />
@@ -96,7 +106,6 @@
     <style>
       .slide { display:block !important; margin-bottom: 2rem; }
       .nav, .skip { display:none !important; }
-      h1 { font-size: clamp(4.5rem, 18vw, 6.5rem) !important; }
     </style>
   </noscript>
   <script>
@@ -138,7 +147,8 @@
       skip.addEventListener("click", function () { go(n - 1); });
 
       document.addEventListener("keydown", function (e) {
-        if (e.key === "ArrowRight" || (e.key === "Enter" && i < n - 1 && e.target === document.body)) go(i + 1);
+        if (e.target && e.target.tagName === "INPUT") return;
+        if (e.key === "ArrowRight" || e.key === "Enter") go(i + 1);
         if (e.key === "ArrowLeft") go(i - 1);
       });
 
@@ -148,8 +158,9 @@
       document.addEventListener("touchend", function (e) {
         if (!e.changedTouches[0]) return;
         var dx = e.changedTouches[0].clientX - startX;
-        if (dx < -50) go(i + 1);
-        if (dx > 50) go(i - 1);
+        if (Math.abs(dx) < 50) return;
+        if (dx < 0) go(i + 1);
+        else go(i - 1);
       }, { passive: true });
     })();
   </script>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Flo — Stop hunting the school email</title>
+  <meta name="description" content="Flo reads the school, sports, and work mail you already have and prints one paper for the table." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet" />
+  <style>
+    :root { --paper:#f4ead4; --sheet:#fbf4e4; --ink:#1c1610; --rule:#2a2218; --rust:#8a3d2a; --mute:#5c5348; }
+    * { box-sizing: border-box; }
+    body { margin:0; background:var(--paper); color:var(--ink); font-family:Newsreader, Georgia, serif; min-height:100vh; }
+    .wrap { max-width: 36rem; margin: 0 auto; padding: 3rem 1.25rem 4rem; }
+    .sheet { background:var(--sheet); border:1px solid rgba(42,34,24,.18); box-shadow: 0 18px 50px rgba(60,40,20,.16); padding: 2.5rem 1.75rem; }
+    @media (min-width: 640px) { .sheet { padding: 3rem 2.5rem; } }
+    .kicker { font-family: Fraunces, Georgia, serif; font-size: .72rem; letter-spacing: .22em; text-transform: uppercase; font-weight: 600; color: var(--rust); text-align:center; }
+    h1 { font-family: Fraunces, Georgia, serif; font-weight: 700; letter-spacing: -.03em; line-height: .8; font-size: clamp(4.5rem, 18vw, 6.5rem); text-align:center; margin: .75rem 0 0; }
+    .hed { font-family: Fraunces, Georgia, serif; font-style: italic; font-size: clamp(1.5rem, 4vw, 1.85rem); text-align:center; line-height: 1.25; margin: 1.25rem 0 0; }
+    .rule { border-top: 3px solid var(--rule); border-bottom: 1px solid var(--rule); height: 7px; margin: 1.5rem 0 0; }
+    .dek { font-size: 1.12rem; line-height: 1.6; margin: 1.5rem 0 0; }
+    label { display:block; font-family: Fraunces, Georgia, serif; font-size: .72rem; letter-spacing: .22em; text-transform: uppercase; color: var(--mute); margin-bottom: .4rem; }
+    input[type=email] { width:100%; border:1px solid var(--rule); background:var(--sheet); padding: .6rem .75rem; font: 1.1rem Newsreader, Georgia, serif; color: var(--ink); }
+    button { margin-top: .75rem; font-family: Fraunces, Georgia, serif; font-size: .85rem; letter-spacing: .08em; text-transform: uppercase; background: transparent; border: 1px solid var(--rule); padding: .55rem 1rem; cursor: pointer; color: var(--ink); }
+    button:hover { background: var(--ink); color: var(--sheet); }
+    .fine { margin-top: 2rem; font-size: .85rem; color: var(--mute); line-height: 1.45; }
+    form { margin-top: 2rem; }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <article class="sheet">
+      <p class="kicker">The family newspaper</p>
+      <h1>FLO</h1>
+      <p class="hed">Stop hunting the school email.</p>
+      <div class="rule"></div>
+      <p class="dek">Buried in school email. Picture day. Soccer’s at the wrong field. Two pickups at once. Flo reads the mail you already have and prints one paper for the table — so you get the morning back with the kids, not the inbox. Named after my mom. She doesn’t invent.</p>
+      <form action="https://formsubmit.co/familybrief2000@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="Flo waitlist" />
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="hidden" name="_template" value="box" />
+        <input type="hidden" name="_next" value="https://familybrief2000.github.io/flo-waitlist/thanks.html" />
+        <input type="text" name="_honey" style="display:none" />
+        <label for="email">Your email</label>
+        <input id="email" type="email" name="email" required autocomplete="email" placeholder="you@example.com" />
+        <button type="submit">Put me on the list</button>
+      </form>
+      <p class="fine">First families, by hand. We’ll write when a real household is using the paper — not when we have a prettier page. Your data is safe with us. Not shared with anyone else.</p>
+    </article>
+  </main>
+</body>
+</html>
